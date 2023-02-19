@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, StatusBar, View, Switch, SafeAreaView, ScrollView } from 'react-native'
+import { ImageBackground, StyleSheet, StatusBar, View, Switch, SafeAreaView } from 'react-native'
 import React, { useState } from 'react';
 
 // Components 

@@ -1,4 +1,4 @@
-import { ImageBackground, StatusBar, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import { ImageBackground, StatusBar, StyleSheet, TouchableOpacity, View, FlatList } from 'react-native';
 import React from 'react';
 
 //Components
