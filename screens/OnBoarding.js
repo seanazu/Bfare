@@ -1,8 +1,8 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View, Dimensions, Platform, TouchableOpacity, Animated} from 'react-native'
+import { ImageBackground, SafeAreaView, StyleSheet, View, Dimensions, Animated} from 'react-native'
 import React, { useEffect, useRef } from 'react';
 
 //  Images
-import WelcomeScreen1 from '../assets/png/Welcome1.png'
+import BackgroundImage from '../assets/png/Welcome2.png'
 
 // Components 
 import { defaultColors } from '../assets/styling/defaultColors';
@@ -14,16 +14,12 @@ import { cardShadow } from '../assets/styling/Shadows';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
+import LinkButton from '../components/buttons/LinkButton';
 
 
-const WelcomeScreen = () => {
+const OnBoarding = () => {
   const navigation = useNavigation()
   const popupAnim = useRef(new Animated.Value(-250)).current
-
-
-  const goToOnBoarding = () =>{
-    navigation.navigate("OnBoarding")
-  }
 
   useEffect(() => {
     Animated.timing(popupAnim, {
@@ -34,31 +30,41 @@ const WelcomeScreen = () => {
   }, [popupAnim]);
 
 
+  const goToLogin = () =>{
+    navigation.navigate("Login")
+  }
+
 
   return (
     <ImageBackground
       style={styles.imageBackground}
-      source={WelcomeScreen1}
+      source={BackgroundImage}
     >
         <Animated.View style={{...styles.container, marginBottom:popupAnim}}>
           <View style={[styles.textContainer, cardShadow]}>
             <AppText style={styles.headerText}>
-              Welcome 
+              New ticket 
             </AppText>
             <AppText style={styles.bodyText}>
-              Bfare is a market place for you to buy and sell tickets directly from other buyers.  
+              When you buy a plane ticket or hotel booking in Bfare, we make sure you get a new ticket or reservation number.
+            </AppText>
+            <AppText style={[styles.bodyText,{marginTop:0}]}>
+             It is safe as buying the tickets directly from the original reservation app.
             </AppText>
             <AppText style={[styles.bodyText,{marginTop:10}]}>
-              lets say you got stuck with tickets and don't know where to sell them - we are the solution !
+              Simply create an account and enjoy Bfare.
             </AppText>
-            <DefaultButton text={'continue'} func={goToOnBoarding} />
+            <View style={styles.buttonsContainer}>
+               <DefaultButton text={'Sign up'} func={goToLogin} />
+               <LinkButton text={'login'} func={goToLogin} />
+            </View>
           </View>
         </Animated.View>
     </ImageBackground>
   )
 }
 
-export default WelcomeScreen
+export default OnBoarding
 
 const styles = StyleSheet.create({
     imageBackground:{
@@ -96,5 +102,8 @@ const styles = StyleSheet.create({
       width:'70%',
       fontWeight:'500'
     },
+    buttonsContainer:{
+        flexDirection:'row'
+    }
    
 })

@@ -16,11 +16,12 @@ import DealsScreen from "./screens/DealsScreen";
 import SearchingScreen from "./screens/SearchingScreen";
 import EventScreen from "./screens/EventScreen";
 import UserSettingScreen from "./screens/UserSettingScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import OnBoarding from "./screens/OnBoarding";
 
 // Redux 
 import { Provider } from "react-redux";
 import store from './redux/store';
-import WelcomeScreen from "./screens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -40,6 +41,11 @@ export default function App() {
             <Stack.Screen 
               name="Welcome" 
               component={WelcomeScreen} 
+              options={{headerShown:false}}
+              />
+            <Stack.Screen 
+              name="OnBoarding" 
+              component={OnBoarding} 
               options={{headerShown:false}}
               />
             <Stack.Screen 
