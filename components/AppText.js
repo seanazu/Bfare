@@ -11,6 +11,6 @@ export default AppText
 
 const styles = StyleSheet.create({
     defaultStyle:{
-        fontFamily:'OpenSans-Regular',
+        fontFamily:'Poppins-Regular',
     }
 })

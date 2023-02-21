@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { LogBox, StyleSheet } from "react-native";
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,11 +20,16 @@ import UserSettingScreen from "./screens/UserSettingScreen";
 // Redux 
 import { Provider } from "react-redux";
 import store from './redux/store';
+import WelcomeScreen from "./screens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator()
 
 
 export default function App() {
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, [])
 
   return (
    
@@ -32,6 +37,11 @@ export default function App() {
         <Provider store={store} >
         <NativeBaseProvider>
           <Stack.Navigator>
+            <Stack.Screen 
+              name="Welcome" 
+              component={WelcomeScreen} 
+              options={{headerShown:false}}
+              />
             <Stack.Screen 
               name="Home" 
               component={HomeScreen} 

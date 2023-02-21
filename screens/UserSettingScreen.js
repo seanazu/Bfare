@@ -1,5 +1,14 @@
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { View,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Alert,
+  ScrollView,
+  Image } from 'react-native';
 import React, { useState } from 'react';
+import ImagePicker from 'react-native-image-crop-picker'; 
 
 // Components 
 import BasicInfo from '../components/userData/BasicInfo';
@@ -10,28 +19,74 @@ import { defaultColors } from '../assets/styling/defaultColors';
 
 // UI Libraries
 import AppText from '../components/AppText';
-
-// Firebase 
-import { storageRef } from './firebase-config';
-import { ScrollView } from 'native-base';
 import PenIcon from '../components/icons/PenIcon';
+
+// Firebase
+import storage from '@react-native-firebase/storage';
 
 
 const UserSettingScreen = () => {
+  const [image, setImage] = useState("")
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
 
-  const[image, setImage] = useState();
-  const[uploading, setUploading] = useState(false);
+  const options = {
+    maxWidth: 2000,
+    maxHeight: 2000,
+    cropping: true,
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    }
+  };
 
   const imagePicker = async () =>{
-    try{
-    } 
-    catch (error) {
-    }
+    ImagePicker.openPicker(options).then(response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = Platform.OS === 'android' ? response.path : response.sourceURL
+        uploadImage(source)
+      }
+    }).catch((err)=>{
+      console.log(err)
+    })
   }
 
-  const handleUpload = async () =>{
-    setUploading(true)
-  }
+  const uploadImage = async (image) => {
+    const uri = image;
+    console.log(image)
+    const index = uri.lastIndexOf('/') 
+    const filename = uri.substring(index + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    setUploading(true);
+    setTransferred(0);
+    const imageRef = storage().ref(filename)
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri);
+    // set progress state
+    task.on('state_changed', snapshot => {
+      setTransferred(
+        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+      );
+    });
+    try {
+      await task;
+      setImage(await imageRef.getDownloadURL().catch((error) => { throw error }))
+    } catch (e) {
+      console.error(e);
+    }
+    setUploading(false);
+    Alert.alert(
+      'Photo uploaded!',
+      'Your photo has been uploaded to Firebase Cloud Storage!'
+    );
+  };
 
   return (
     <ScrollView>
@@ -39,7 +94,7 @@ const UserSettingScreen = () => {
          <View style={styles.logoContainer}>
            <Image
              style={styles.userLogo}
-             source={image? {uri:image} : require('../assets/png/userDefault.png')}
+             source={image ? {uri : image} : require('../assets/png/userDefault.png')}
            />
            <TouchableOpacity style={styles.addImageButton} activeOpacity={.8} onPress={imagePicker} >
              <PenIcon />

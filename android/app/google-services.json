@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "989764811787",
+    "project_id": "switchit-a75d6",
+    "storage_bucket": "switchit-a75d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989764811787:android:5675aac819baec74ab9b0e",
+        "android_client_info": {
+          "package_name": "com.bfare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989764811787-m300sehofkubklia38qppgvig4d93101.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyKJ3Ir4u5jIuaoU1FPWPF-n3p2fyGQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989764811787-m300sehofkubklia38qppgvig4d93101.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "989764811787-l3n8v3d49j5ieg8mbqkmr8p6vnfd7o5u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Bfare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
