@@ -34,6 +34,10 @@ const OnBoarding = () => {
     navigation.navigate("Login")
   }
 
+  const goToRegister = () =>{
+    navigation.navigate("Register")
+  }
+
 
   return (
     <ImageBackground
@@ -55,7 +59,7 @@ const OnBoarding = () => {
               Simply create an account and enjoy Bfare.
             </AppText>
             <View style={styles.buttonsContainer}>
-               <DefaultButton text={'Sign up'} func={goToLogin} />
+               <DefaultButton text={'Sign up'} func={goToRegister} />
                <LinkButton text={'login'} func={goToLogin} />
             </View>
           </View>

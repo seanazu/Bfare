@@ -18,6 +18,8 @@ import EventScreen from "./screens/EventScreen";
 import UserSettingScreen from "./screens/UserSettingScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import OnBoarding from "./screens/OnBoarding";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
 // Redux 
 import { Provider } from "react-redux";
@@ -46,6 +48,16 @@ export default function App() {
             <Stack.Screen 
               name="OnBoarding" 
               component={OnBoarding} 
+              options={{headerShown:false}}
+              />
+            <Stack.Screen 
+              name="Login" 
+              component={Login} 
+              options={{headerShown:false}}
+              />
+            <Stack.Screen 
+              name="Register" 
+              component={Register} 
               options={{headerShown:false}}
               />
             <Stack.Screen 
