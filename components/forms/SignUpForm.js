@@ -3,7 +3,6 @@ import React from 'react'
 import TextInputDef from '../inputs/TextInputDef'
 
 const SignUpForm = ({ type }) => {
-
   
   return (
     <View style={styles.container}>

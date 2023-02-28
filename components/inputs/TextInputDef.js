@@ -1,11 +1,22 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React from 'react';
+
+// Style
+import { defaultColors } from '../../assets/styling/defaultColors';
+
+// Components
 import EmailIcon from '../icons/EmailIcon';
 import LockIcon from '../icons/LockIcon';
 import UserIcon from '../icons/UserIcon';
-import { defaultColors } from '../../assets/styling/defaultColors';
+
+// Redux 
+import { useDispatch } from 'react-redux';
+import { addEmail, addFullName, addPassword } from '../../redux/features/userSlice';
+
 
 const TextInputDef = ({ text, func, iconName }) => {
+
+  const dispatch = useDispatch();
 
   let icon; 
   if (iconName === 'user'){
@@ -14,6 +25,17 @@ const TextInputDef = ({ text, func, iconName }) => {
     icon = <LockIcon />
   }else if ( iconName === 'email'){
     icon = <EmailIcon />
+  }
+
+  const addInputData = (text) =>{
+
+    if (iconName === 'user'){
+      dispatch(addFullName(text))
+    } else if (iconName === 'password'){
+      dispatch(addPassword(text))
+    }else if ( iconName === 'email'){
+      dispatch(addEmail(text))
+    }
   }
 
 
@@ -29,7 +51,7 @@ const TextInputDef = ({ text, func, iconName }) => {
           placeholder={text}
           keyboardType='default' 
           style={styles.textInput}
-          onChaneText={func}
+          onChangeText={text => addInputData(text)}
         />
       
       </View>

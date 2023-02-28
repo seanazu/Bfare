@@ -16,44 +16,80 @@ import { cardShadow } from '../assets/styling/Shadows';
 import { useNavigation } from '@react-navigation/native';
 import SignUpForm from '../components/forms/SignUpForm';
 
+// Firebase
+import auth from '@react-native-firebase/auth';
+
+// Redux
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../redux/features/userSlice';
+
 const screenHeight = Dimensions.get('screen').height
 
 const LoginAndRegister = ({ text, route }) => {
-  const[type, setType] = useState(route.params.type)
+  const[type, setType] = useState(route.params.type);
+  const[name, setName] = useState('');
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
+
+  const user = useSelector(selectUserData);
+
   const navigation = useNavigation()
   const popupAnim = useRef(new Animated.Value(-250)).current
+
+  useEffect(() => {
+    triggerAnimation()
+  }, [popupAnim]);
+
+  const triggerAnimation = () =>{
+    popupAnim.setValue(-400)
+    Animated.timing(popupAnim, {
+      toValue: -60,
+      duration: 1500,
+      useNativeDriver: false,
+    }).start()
+  }
 
   const goToHomeScreen = () =>{
     navigation.navigate("Home")
   }
 
-  useEffect(() => {
-    Animated.timing(popupAnim, {
-      toValue: -60,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  }, [popupAnim]);
-
   const showLogin = () =>{
     setType('login')
-    popupAnim.setValue(-450)
-    Animated.timing(popupAnim, {
-      toValue: -60,
-      duration: 1500,
-      useNativeDriver: false,
-    }).start()
+    triggerAnimation()
   }
 
   const showSignUp = () =>{
     setType('sign up')
-    popupAnim.setValue(-450)
-    Animated.timing(popupAnim, {
-      toValue: -60,
-      duration: 1500,
-      useNativeDriver: false,
-    }).start()
+    triggerAnimation()
   }
+
+  const createUser = () =>{
+
+    console.log(user)
+
+    // auth()
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then(() => {
+    //     alert('User account created & signed in!');
+    //   })
+    //   .catch(error => {
+    //     if (error.code === 'auth/email-already-in-use') {
+    //       console.log('That email address is already in use!');
+    //     }
+    
+    //     if (error.code === 'auth/invalid-email') {
+    //       console.log('That email address is invalid!');
+    //     }
+    
+    //     console.error(error);
+    //   });
+
+  }
+
+  const login = () =>{
+
+  }
+
 
 
 
@@ -73,7 +109,7 @@ const LoginAndRegister = ({ text, route }) => {
 
               < SignUpForm type={type} />
               
-              <DefaultButton text={'Sign in'} func={goToHomeScreen} />
+              <DefaultButton text={'Sign in'} func={createUser} />
 
               <AppText style={styles.loginText}>
                 Dont have an account ? 
@@ -86,14 +122,18 @@ const LoginAndRegister = ({ text, route }) => {
               <AppText style={styles.headerText}>
                 Sign up
               </AppText>
-              < SignUpForm type={type} />
-              <DefaultButton text={'Sign up'} func={goToHomeScreen} />
+
+              <SignUpForm type={type} />
+
+              <DefaultButton text={'Sign up'} func={createUser} />
+
               <AppText style={styles.loginText}>
                 Have an account already ? 
                 <TouchableOpacity style={styles.loginButton} onPress={showLogin}>
                   <Text style={styles.loginButtonText} >Login</Text>
                 </TouchableOpacity>
               </AppText>
+
             </> 
             }
             
