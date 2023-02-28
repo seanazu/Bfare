@@ -1,4 +1,4 @@
-import { ImageBackground, SafeAreaView, StyleSheet, View, Dimensions, Animated} from 'react-native'
+import { ImageBackground, StyleSheet, View, Dimensions, Animated} from 'react-native'
 import React, { useEffect, useRef } from 'react';
 
 //  Images
@@ -31,11 +31,15 @@ const OnBoarding = () => {
 
 
   const goToLogin = () =>{
-    navigation.navigate("LoginAndRegister")
+    navigation.navigate("LoginAndRegister", {
+      type: 'login',
+    })
   }
 
   const goToRegister = () =>{
-    navigation.navigate("LoginAndRegister")
+    navigation.navigate("LoginAndRegister", {
+      type: 'sign up',
+    })
   }
 
 
