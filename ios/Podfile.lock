@@ -11,12 +11,20 @@ PODS:
     - React-Core (= 0.69.2)
     - React-jsi (= 0.69.2)
     - ReactCommon/turbomodule/core (= 0.69.2)
+  - Firebase/Auth (9.2.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 9.2.0)
   - Firebase/CoreOnly (9.2.0):
     - FirebaseCore (= 9.2.0)
   - Firebase/Storage (9.2.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 9.2.0)
   - FirebaseAppCheckInterop (9.6.0)
+  - FirebaseAuth (9.2.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.7)
   - FirebaseAuthInterop (9.6.0)
   - FirebaseCore (9.2.0):
     - FirebaseCoreDiagnostics (~> 9.0)
@@ -47,11 +55,21 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.11.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.11.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.11.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.11.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.11.0)"
+  - GoogleUtilities/Reachability (7.11.0):
+    - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (2.3.0)
   - lottie-ios (3.4.4)
   - lottie-react-native (5.1.5):
@@ -349,6 +367,10 @@ PODS:
   - RNFBApp (15.1.1):
     - Firebase/CoreOnly (= 9.2.0)
     - React-Core
+  - RNFBAuth (15.1.1):
+    - Firebase/Auth (= 9.2.0)
+    - React-Core
+    - RNFBApp
   - RNFBStorage (15.1.1):
     - Firebase/Storage (= 9.2.0)
     - React-Core
@@ -408,6 +430,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -418,6 +441,7 @@ SPEC REPOS:
   trunk:
     - Firebase
     - FirebaseAppCheckInterop
+    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -507,6 +531,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
   RNImageCropPicker:
@@ -526,6 +552,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 1381e8c4230895b6c2d20cea6b216ac7096a95f0
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
   FirebaseAppCheckInterop: d5ecda0c09f8069406643d6e0fa12c09d1b736e3
+  FirebaseAuth: 1c574ab64a051dd86dbe7fd5a3f86b58155b3482
   FirebaseAuthInterop: b6cf02117f13a8400c8c8b4421e12c6e850bcaf3
   FirebaseCore: 0e27f2a15d8f7b7ef11e7d93e23b1cbab55d748c
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
@@ -571,6 +598,7 @@ SPEC CHECKSUMS:
   ReactCommon: a9414b91f0d19de002b55d9f4f6cb176d6dd8452
   RNDateTimePicker: 2cc0a68b714aba89b4bc017796cd8c8825e0c3a7
   RNFBApp: e3e4af6906a891d46af60340b4313b63eb082de9
+  RNFBAuth: dca6dec4a91cc3aa5c9cf8df7c97cc61d0395245
   RNFBStorage: bcb2ff398591b4facd072faecc61caafdafc20af
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
