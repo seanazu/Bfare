@@ -11,13 +11,19 @@ import UnverifiedIcon from '../icons/UnverifiedIcon';
 import ArrowRight from '../icons/ArrowRight';
 import { cardShadow } from '../../assets/styling/Shadows';
 
+// Redux
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../../redux/features/userSlice';
+
 
 const BasicInfo = () => {
 
+  const { user } = useSelector(selectUserData);
+
   const userData = {
-    email:'user1@gmail.com',
-    username:'user1',
-    phoneNumber:'+972-050002000',
+    email:user.email,
+    username:user.fullName,
+    phoneNumber:user.phoneNumber,
     verified:true
   }
 

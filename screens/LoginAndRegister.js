@@ -16,14 +16,15 @@ import { cardShadow } from '../assets/styling/Shadows';
 import { useNavigation } from '@react-navigation/native';
 import SignUpForm from '../components/forms/SignUpForm';
 
-// Firebase
-import auth from '@react-native-firebase/auth';
-
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from '../redux/features/userSlice';
+import { addUser } from '../redux/features/userSlice';
 
-const screenHeight = Dimensions.get('screen').height
+// Firebase
+import { signUp, login } from '../assets/firebase/userFunctions';
+import firestore from '@react-native-firebase/firestore'
+
 
 const LoginAndRegister = ({ text, route }) => {
   const[type, setType] = useState(route.params.type);
@@ -31,10 +32,11 @@ const LoginAndRegister = ({ text, route }) => {
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
-  const user = useSelector(selectUserData);
+  const { user } = useSelector(selectUserData);
+  const navigation = useNavigation();
+  const popupAnim = useRef(new Animated.Value(-250)).current;
 
-  const navigation = useNavigation()
-  const popupAnim = useRef(new Animated.Value(-250)).current
+  const dispatch = useDispatch()
 
   useEffect(() => {
     triggerAnimation()
@@ -64,30 +66,24 @@ const LoginAndRegister = ({ text, route }) => {
   }
 
   const createUser = () =>{
-
-    console.log(user)
-
-    // auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     alert('User account created & signed in!');
-    //   })
-    //   .catch(error => {
-    //     if (error.code === 'auth/email-already-in-use') {
-    //       console.log('That email address is already in use!');
-    //     }
-    
-    //     if (error.code === 'auth/invalid-email') {
-    //       console.log('That email address is invalid!');
-    //     }
-    
-    //     console.error(error);
-    //   });
-
+    const userObj = signUp(user.fullName, user.email, user.phoneNumber, user.password);
+    console.log(userObj)
+    if(userObj){
+      dispatch(addUser(userObj))
+      navigation.navigate("Home")
+    } else {
+      console.log('error in sign up ')
+    }
   }
 
-  const login = () =>{
-
+  const loginUser = () =>{
+    const userObj = login( user.email, user.password )
+    if(userObj){
+      dispatch(addUser(userObj))
+      navigation.navigate("Home")
+    }  else {
+      console.log('error in login ')
+    }
   }
 
 
@@ -109,7 +105,7 @@ const LoginAndRegister = ({ text, route }) => {
 
               < SignUpForm type={type} />
               
-              <DefaultButton text={'Sign in'} func={createUser} />
+              <DefaultButton text={'Login'} func={loginUser} />
 
               <AppText style={styles.loginText}>
                 Dont have an account ? 

@@ -4,7 +4,8 @@ const initialState = {
   user: {
     fullName:'',
     email:'',
-    password:''
+    password:'', 
+    phoneNumber:''
   },
 }
 
@@ -21,11 +22,17 @@ export const userSlice = createSlice({
     addPassword: (state, action) => {
       state.user.password = action.payload
     },
+    addPhoneNumber: (state, action) => {
+      state.user.phoneNumber = action.payload
+    },
+    addUser: (state, action) => {
+      state.user = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addFullName, addEmail, addPassword } = userSlice.actions ;
+export const { addFullName, addEmail, addPassword, addPhoneNumber, addUser } = userSlice.actions ;
 
 export const selectUserData = (state) => state.user ;
 

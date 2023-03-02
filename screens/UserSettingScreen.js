@@ -24,7 +24,6 @@ import PenIcon from '../components/icons/PenIcon';
 // Firebase
 import storage from '@react-native-firebase/storage';
 
-
 const UserSettingScreen = () => {
   const [image, setImage] = useState("")
   const [uploading, setUploading] = useState(false);

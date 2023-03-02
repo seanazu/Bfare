@@ -8,13 +8,14 @@ import { defaultColors } from '../../assets/styling/defaultColors';
 import EmailIcon from '../icons/EmailIcon';
 import LockIcon from '../icons/LockIcon';
 import UserIcon from '../icons/UserIcon';
+import PhoneIcon from '../icons/PhoneIcon';
 
 // Redux 
 import { useDispatch } from 'react-redux';
-import { addEmail, addFullName, addPassword } from '../../redux/features/userSlice';
+import { addEmail, addFullName, addPassword, addPhoneNumber } from '../../redux/features/userSlice';
 
 
-const TextInputDef = ({ text, func, iconName }) => {
+const TextInputDef = ({ text, iconName }) => {
 
   const dispatch = useDispatch();
 
@@ -23,18 +24,21 @@ const TextInputDef = ({ text, func, iconName }) => {
     icon = <UserIcon />
   } else if (iconName === 'password'){
     icon = <LockIcon />
-  }else if ( iconName === 'email'){
+  } else if ( iconName === 'email'){
     icon = <EmailIcon />
+  } else if ( iconName === 'phone'){
+    icon = <PhoneIcon />
   }
 
   const addInputData = (text) =>{
-
     if (iconName === 'user'){
       dispatch(addFullName(text))
     } else if (iconName === 'password'){
       dispatch(addPassword(text))
-    }else if ( iconName === 'email'){
+    } else if ( iconName === 'email'){
       dispatch(addEmail(text))
+    } else if ( iconName === 'phone'){
+      dispatch(addPhoneNumber(text))
     }
   }
 
@@ -49,9 +53,11 @@ const TextInputDef = ({ text, func, iconName }) => {
       
         <TextInput
           placeholder={text}
-          keyboardType='default' 
+          keyboardType={iconName === 'phone' ? 'phone-pad' : 'default'}
           style={styles.textInput}
+          secureTextEntry={ iconName === 'password' ? true : false}
           onChangeText={text => addInputData(text)}
+
         />
       
       </View>
