@@ -1,4 +1,4 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View, Dimensions, Platform, TouchableOpacity, Animated} from 'react-native'
+import { ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOpacity, Animated} from 'react-native'
 import React, { useEffect, useRef, useState } from 'react';
 
 //  Images
@@ -23,14 +23,9 @@ import { addUser } from '../redux/features/userSlice';
 
 // Firebase
 import { signUp, login } from '../assets/firebase/userFunctions';
-import firestore from '@react-native-firebase/firestore'
-
 
 const LoginAndRegister = ({ text, route }) => {
   const[type, setType] = useState(route.params.type);
-  const[name, setName] = useState('');
-  const[email, setEmail] = useState('');
-  const[password, setPassword] = useState('');
 
   const { user } = useSelector(selectUserData);
   const navigation = useNavigation();
@@ -51,10 +46,6 @@ const LoginAndRegister = ({ text, route }) => {
     }).start()
   }
 
-  const goToHomeScreen = () =>{
-    navigation.navigate("Home")
-  }
-
   const showLogin = () =>{
     setType('login')
     triggerAnimation()
@@ -66,24 +57,19 @@ const LoginAndRegister = ({ text, route }) => {
   }
 
   const createUser = () =>{
-    const userObj = signUp(user.fullName, user.email, user.phoneNumber, user.password);
-    console.log(userObj)
-    if(userObj){
-      dispatch(addUser(userObj))
-      navigation.navigate("Home")
-    } else {
-      console.log('error in sign up ')
-    }
+    signUp(user.fullName, user.email, user.phoneNumber, user.password, dispatchUser);
+    
   }
 
   const loginUser = () =>{
-    const userObj = login( user.email, user.password )
-    if(userObj){
-      dispatch(addUser(userObj))
-      navigation.navigate("Home")
-    }  else {
-      console.log('error in login ')
-    }
+    login(user.email, user.password, dispatchUser)
+    
+  }
+
+  const dispatchUser = (userObj) =>{
+    console.log(userObj)
+    dispatch(addUser(userObj))
+    navigation.navigate("Loading")
   }
 
 

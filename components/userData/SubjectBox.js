@@ -11,8 +11,18 @@ import BookingIcon from '../icons/BookingIcon';
 import SoldIcon from '../icons/SoldIcon';
 import WalletIcon from '../icons/WalletIcon';
 import ChatIcon from '../icons/ChatIcon';
+import DollarIcon from '../icons/DollarIcon';
+import { useNavigation } from '@react-navigation/native';
 
-const SubjectBox = ({ theme }) => {
+const SubjectBox = ({ theme, screenName }) => {
+  const navigation = useNavigation()
+
+
+  const navigateTo = () =>{
+    if(screenName){
+      navigation.navigate(screenName)
+    }
+  }
   
   let icon  ; 
   if(theme === "alerts"){
@@ -27,8 +37,8 @@ const SubjectBox = ({ theme }) => {
   if(theme === "sold" ){
     icon = <SoldIcon />
   }
-  if(theme === "wallet"){
-    icon = <WalletIcon />
+  if(theme === "sell"){
+    icon = <DollarIcon />
   }
   if(theme === "chat"){
     icon = <ChatIcon />
@@ -36,7 +46,7 @@ const SubjectBox = ({ theme }) => {
   
 
   return (
-    <TouchableOpacity activeOpacity={.5} style={[styles.container, cardShadow]}>
+    <TouchableOpacity activeOpacity={.5} style={[styles.container, cardShadow]} onPress={navigateTo} >
       {icon}
       <AppText style={styles.subjectBoxText}> 
         {theme}

@@ -3,14 +3,20 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const signUp = (fullName, email, phoneNumber, password) =>{
+export const signUp = (fullName, email, phoneNumber, password, dispatchUser) =>{
+  let user; 
   if(fullName !== ''){
     if(phoneNumber.length == 10){
       auth() 
       .createUserWithEmailAndPassword(email, password)
       .then(async (data) => {
         createUser(data.user.uid, fullName, email, phoneNumber)
-        alert('User account created & signed in!');
+        user = {
+          fullName:fullName,
+          email:email, 
+          phoneNumber:phoneNumber
+        }
+        dispatchUser(user)
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -32,17 +38,12 @@ export const signUp = (fullName, email, phoneNumber, password) =>{
 
 }
 
-export const login = (email, password) =>{
-  let user ;
+export const login = (email, password, dispatchUser) =>{
   auth()
     .signInWithEmailAndPassword(email, password)
-    .then((data) => {
-      const dbUser = getUser(data.user.uid)
-      user = {
-        fullName:dbUser.fullName,
-        email:dbUser.email,
-        phoneNumber:dbUser.phoneNumber
-      }
+    .then(async (data) => {
+      const dbUser = await getUser(data.user.uid)
+      dispatchUser(dbUser)
     })
     .catch(error => {
       if (error.code === 'auth/wrong-password') {
@@ -52,7 +53,6 @@ export const login = (email, password) =>{
       }
       console.log(error);
     });
-  return user ;
 }
 
 export const createUser = (userId, fullName, email, phoneNumber) =>{
@@ -70,10 +70,13 @@ export const createUser = (userId, fullName, email, phoneNumber) =>{
 }
 
 export const getUser = async (userId) =>{
-  const userRef = firestore().collection('Users').doc(userId);
-  const doc = await userRef.get();
-  const userData = doc.data();
-  return userData
+  try{
+    const userObj = await firestore().collection('Users').doc(userId).get();
+    const user = userObj._data;
+    return user
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 

@@ -23,6 +23,7 @@ import LoginAndRegister from "./screens/LoginAndRegister";
 // Redux 
 import { Provider } from "react-redux";
 import store from './redux/store';
+import LoadingScreen from "./screens/LoadingScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -31,6 +32,8 @@ export default function App() {
 
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    
+
   }, [])
 
   return (
@@ -52,6 +55,11 @@ export default function App() {
             <Stack.Screen 
               name="LoginAndRegister" 
               component={LoginAndRegister} 
+              options={{headerShown:false}}
+              />
+            <Stack.Screen 
+              name="Loading" 
+              component={LoadingScreen} 
               options={{headerShown:false}}
               />
             <Stack.Screen 

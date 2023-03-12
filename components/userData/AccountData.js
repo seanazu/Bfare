@@ -4,7 +4,7 @@ import SubjectBox from './SubjectBox'
 
 const AccountData = () => {
 
-  const boxTheme = ['alerts', 'cart', 'bookings', 'sold', 'wallet', 'chat']
+  const boxTheme = ['alerts', 'cart', 'bookings', 'sold', 'sell', 'chat']
 
   const renderItem = ({ item }) => (
     <SubjectBox theme={item} />
